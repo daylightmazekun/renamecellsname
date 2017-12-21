@@ -7,6 +7,8 @@ import constants.ReanmeCellsConstants;
 import org.apache.log4j.Logger;
 
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -43,7 +45,7 @@ public class RenameItImp implements RenameIt {
                         if (logger.isDebugEnabled()) {
                             logger.debug("文件:" + file2.getAbsolutePath());
                         }
-                        if (this.checkExcelVaild(file2)) {
+                        if (file2.getAbsolutePath().endsWith(ReanmeCellsConstants.EXCEL_XLSM)) {
                             try {
                                 //初始化输入流
                                 InputStream is = new FileInputStream(file2.getAbsolutePath());
@@ -65,23 +67,23 @@ public class RenameItImp implements RenameIt {
                                                 if (logger.isDebugEnabled()) {
                                                     logger.debug("单元格" + row.getCell(k));
                                                 }
-                                                if(row.getCell(k) != null) {
+                                                if (row.getCell(k) != null) {
                                                     Iterator<String> iter = cells.getHashMap().keySet().iterator();
-                                                    while(iter.hasNext()){
-                                                        String key=iter.next();
+                                                    while (iter.hasNext()) {
+                                                        String key = iter.next();
                                                         //String value = cells.getHashMap().get(key);
                                                         if (logger.isDebugEnabled()) {
                                                             logger.debug("row.getCell(k)" + row.getCell(k));
                                                             logger.debug("key" + key);
                                                         }
-                                                        if(key.equals(row.getCell(k).toString())){
+                                                        if (key.equals(row.getCell(k).toString())) {
                                                             FileOutputStream out = new FileOutputStream(file2.toString());
                                                             //替换
                                                             row.createCell(k).setCellValue(cells.getHashMap().get(key));
                                                             out.flush();
                                                             workbook.write(out);
                                                             out.close();
-                                                       }
+                                                        }
 
                                                     }
                                                 }
@@ -96,6 +98,63 @@ public class RenameItImp implements RenameIt {
                                 e.printStackTrace();
                             }
 
+                        } else if (file2.getAbsolutePath().endsWith(ReanmeCellsConstants.EXCEL_XLS)) {
+                            {
+                                try {
+                                    //初始化输入流
+                                    InputStream is = new FileInputStream(file2.getAbsolutePath());
+
+                                    //创建Excel,并指定Excel读取位置
+                                    HSSFWorkbook workbook = new HSSFWorkbook(is);
+                                    is.close();
+                                    HSSFSheet sheet = null;
+                                    //获取每个Sheet表
+                                    for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                                        sheet = workbook.getSheetAt(i);
+                                        //获取每行
+                                        for (int j = 0; j < sheet.getLastRowNum(); j++) {
+                                            if (logger.isDebugEnabled()) {
+                                                logger.debug("共几行" + sheet.getLastRowNum());
+                                            }
+                                            Row row = sheet.getRow(j);
+                                            if (row != null) {
+                                                //获取每个单元格
+                                                for (int k = 0; k < row.getLastCellNum(); k++) {
+                                                    if (logger.isDebugEnabled()) {
+                                                        logger.debug("单元格" + row.getCell(k));
+                                                    }
+                                                    if (row.getCell(k) != null) {
+                                                        Iterator<String> iter = cells.getHashMap().keySet().iterator();
+                                                        while (iter.hasNext()) {
+                                                            String key = iter.next();
+                                                            //String value = cells.getHashMap().get(key);
+                                                            if (logger.isDebugEnabled()) {
+                                                                logger.debug("row.getCell(k)" + row.getCell(k));
+                                                                logger.debug("key" + key);
+                                                            }
+                                                            if (key.equals(row.getCell(k).toString())) {
+                                                                FileOutputStream out = new FileOutputStream(file2.toString());
+                                                                //替换
+                                                                row.createCell(k).setCellValue(cells.getHashMap().get(key));
+                                                                out.flush();
+                                                                workbook.write(out);
+                                                                out.close();
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
                         }
                     }
                 }
@@ -107,15 +166,5 @@ public class RenameItImp implements RenameIt {
         }
     }
 
-    @Override
-    public Boolean checkExcelVaild(File file) {
-        if (file.getName().endsWith(ReanmeCellsConstants.EXCEL_XLS) ||
-                file.getName().endsWith(ReanmeCellsConstants.EXCEL_XLSX) ||
-                file.getName().endsWith(ReanmeCellsConstants.EXCEL_XLSM)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }

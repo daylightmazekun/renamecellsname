@@ -12,7 +12,7 @@ public class StartClass {
         Cells cells = new Cells();
         cells.setPath(ReanmeCellsConstants.PATH);
         HashMap<String, String> hashMap = new HashMap<String, String>();
-        hashMap.put("sai0025","GG");
+        hashMap.put("GG","sssss");
         cells.setHashMap(hashMap);
         RenameItImp renameItImp = new RenameItImp();
         renameItImp.traverseFolder(cells);
