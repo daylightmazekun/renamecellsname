@@ -12,4 +12,4 @@
   
   - 2017-12-20 1.0.0 目前只支持.xlsx后缀的文件全匹配检索替换
 *************************************************************  
-&copy;Daylightmazekun
+[&copy;Daylightmazekun](https://weibo.com/3196240693/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1#_rnd1513862966494)
