@@ -3,7 +3,7 @@ package action.actionImp;
 import action.RenameIt;
 
 import bean.Cells;
-import constants.ReanmeCellsConstants;
+import constants.RenameCellsConstants;
 import org.apache.log4j.Logger;
 
 
@@ -45,7 +45,7 @@ public class RenameItImp implements RenameIt {
                         if (logger.isDebugEnabled()) {
                             logger.debug("文件:" + file2.getAbsolutePath());
                         }
-                        if (file2.getAbsolutePath().endsWith(ReanmeCellsConstants.EXCEL_XLSM)) {
+                        if (file2.getAbsolutePath().endsWith(RenameCellsConstants.EXCEL_XLSX)) {
                             try {
                                 //初始化输入流
                                 InputStream is = new FileInputStream(file2.getAbsolutePath());
@@ -98,7 +98,7 @@ public class RenameItImp implements RenameIt {
                                 e.printStackTrace();
                             }
 
-                        } else if (file2.getAbsolutePath().endsWith(ReanmeCellsConstants.EXCEL_XLS)) {
+                        } else if (file2.getAbsolutePath().endsWith(RenameCellsConstants.EXCEL_XLS)) {
                             {
                                 try {
                                     //初始化输入流

@@ -3,14 +3,14 @@ package main;
 
 import action.actionImp.RenameItImp;
 import bean.Cells;
-import constants.ReanmeCellsConstants;
+import constants.RenameCellsConstants;
 
 import java.util.HashMap;
 
 public class StartClass {
     public static void main(String args[]) {
         Cells cells = new Cells();
-        cells.setPath(ReanmeCellsConstants.PATH);
+        cells.setPath(RenameCellsConstants.PATH);
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("GG","sssss");
         cells.setHashMap(hashMap);
